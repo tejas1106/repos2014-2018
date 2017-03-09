@@ -1,0 +1,149 @@
+#include<stdio.h>
+#include<conio.h>
+#include<graphics.h>
+void drawPolygon(int a[][2],int n);
+int getCode(int x,int y,int xmin,int xmax,int ymin,int ymax);
+
+enum mycode{TOP=8,BOTTOM=4,RIGHT=2,LEFT=1};
+void main()
+{
+	int graphics_driver=DETECT,graphics_mode;
+	int a[20][2],store[20][2],code[20],i,j,k,n,xmin,xmax,ymin,ymax;
+	float x,y;
+	clrscr();
+	initgraph(&graphics_driver,&graphics_mode,"C:\\TC\\BGI");
+	printf("Enter no. of vertices of polygon : ");
+	scanf("%d",&n);
+	printf("Enter vertices of polygon : \n");
+	for(i=0;i<n;i++)
+	{
+		printf("X%d,Y%d : ",i+1,i+1);
+		scanf("%d%d",&a[i][0],&a[i][1]);
+	}
+	printf("Enter min and max co-ordiantes of rectangle :\n");
+	printf("xmin,xmax,ymin,ymax : ");
+	scanf("%d%d%d%d",&xmin,&xmax,&ymin,&ymax);
+	cleardevice();
+	outtextxy(10,10,"BEFORE CLIPPING : ");
+	drawPolygon(a,n);
+	rectangle(xmin,ymax,xmax,ymin);
+	getch();
+	cleardevice();
+	outtextxy(10,10,"AFTER CLIPPING : ");
+	for(i=0;i<n;i++)
+	{
+		code[i]=getCode(a[i][0],a[i][1],xmin,xmax,ymin,ymax);
+	}
+	code[n]=code[0];
+
+	for(j=1;j<=8;j*=2)
+	{
+		k=0;
+		for(i=0;i<n;i++)
+		{
+			if((((code[i])&(j))==0) && (((code[i+1])&(j))==0))
+			{
+				store[k][0]=a[i+1][0];
+				store[k][1]=a[i+1][1];
+				k++;
+			}
+			else
+			if(((code[i])&(j)!=0) && (((code[i+1])&(j))!=0))
+			{
+				continue;
+			}
+			else
+			{
+				if(j==LEFT)
+				{
+					y=((float)a[i+1][1]-a[i][1])*(xmin-a[i][0])/(a[i+1][0]-a[i][0])+a[i][1];
+					x=xmin;
+				}
+				else
+				if(j==RIGHT)
+				{
+					y=((float)a[i+1][1]-a[i][1])*(xmax-a[i][0])/(a[i+1][0]-a[i][0])+a[i][1];
+					x=xmax;
+				}
+				else
+				if(j==BOTTOM)
+				{
+					x=((float)a[i+1][0]-a[i][0])*(ymin-a[i][1])/(a[i+1][1]-a[i][1])+a[i][0];
+					y=ymin;
+				}
+				else
+				{
+					x=((float)a[i+1][0]-a[i][0])*(ymax-a[i][1])/(a[i+1][1]-a[i][1])+a[i][0];
+					y=ymax;
+				}
+				if(((code[i])&(j))!=0)
+				{
+					store[k][0]=(int)x;
+					store[k][1]=(int)y;
+					k++;
+					store[k][0]=a[i+1][0];
+					store[k][1]=a[i+1][1];
+					k++;
+				}
+				else
+				{
+					store[k][0]=(int)x;
+					store[k][1]=(int)y;
+					k++;
+				}
+			}
+		}
+		n=k;
+		for(i=0;i<n;i++)
+		{
+			a[i][0]=store[i][0];
+			a[i][1]=store[i][1];
+			code[i]=getCode(a[i][0],a[i][1],xmin,xmax,ymin,ymax);
+		}
+		a[n][0]=a[0][0];
+		a[n][1]=a[0][1];
+		code[n]=code[0];
+	}
+	drawPolygon(a,n);
+	rectangle(xmin,ymax,xmax,ymin);
+
+	getch();
+	closegraph();
+}
+
+void drawPolygon(int a[][2],int n)
+{
+	int i;
+	a[n][0]=a[0][0];
+	a[n][1]=a[0][1];
+	setcolor(11);
+	for(i=0;i<n;i++)
+	{
+		line(a[i][0],a[i][1],a[i+1][0],a[i+1][1]);
+	}
+	getch();
+}
+
+int getCode(int x,int y,int xmin,int xmax,int ymin,int ymax)
+{
+	int code=0;
+	if(x<xmin)
+	{
+		code+=LEFT;
+	}
+	else
+	if(x>xmax)
+	{
+		code+=RIGHT;
+	}
+	if(y<ymin)
+	{
+		code+=BOTTOM;
+	}
+	else
+	if(y>ymax)
+	{
+		code+=TOP;
+	}
+	return code;
+}

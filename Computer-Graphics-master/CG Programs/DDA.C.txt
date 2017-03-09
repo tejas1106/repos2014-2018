@@ -1,0 +1,38 @@
+#include<stdio.h>
+#include<conio.h>
+#include<graphics.h>
+void main()
+{
+	int graphics_driver=DETECT,graphics_mode;
+	int x1,y1,x2,y2,steps,i;
+	float dx,dy,x,y;
+	clrscr();
+	initgraph(&graphics_driver,&graphics_mode,"C:\\TC\\BGI");
+	printf("Enter end co-ordinates of line :\n");
+	printf("X1,Y1 : ");
+	scanf("%d%d",&x1,&y1);
+	printf("X2,Y2 : ");
+	scanf("%d%d",&x2,&y2);
+	dy=y2-y1;
+	dx=x2-x1;
+	if(dx>=dy)
+	{
+		steps=dx;
+	}
+	else
+	{
+		steps=dy;
+	}
+	x=x1;
+	y=y1;
+	putpixel(x,y,11);
+	setcolor(11);
+	for(i=0;i<steps;i++)
+	{
+		x=x+dx/steps;
+		y=y+dy/steps;
+		putpixel(x,y,11);
+	}
+	getch();
+	closegraph();
+}

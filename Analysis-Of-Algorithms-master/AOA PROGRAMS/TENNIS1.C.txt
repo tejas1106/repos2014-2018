@@ -1,0 +1,64 @@
+#include<stdio.h>
+#include<conio.h>
+void tour(int NO);
+int a[20][20],n,i,j,r,k;
+void main()
+{
+	clrscr();
+	printf("Enter no. of players : ");
+	scanf("%d",&n);
+	for(i=0;i<n;i++)
+	{
+		a[i][0]=i+1;
+	}
+	r=2;
+	while(r<=n)
+	{
+		tour(r);
+		r=r*2 ;
+	}
+	printf("\n\t\t");
+	for(i=0;i<n-1;i++)
+	{
+		printf("Day %d\t",i+1);
+	}
+	printf("\n");
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<n;j++)
+		{
+			if(j==0)
+			{
+				printf("%d\t|\t",a[i][j]);
+			}
+			else
+			{
+				printf("%d\t",a[i][j]);
+			}
+		}
+		printf("\n");
+	}
+
+	getch();
+}
+
+void tour(int NO)
+{
+	for(i=0;i<n;i=i+NO)
+	{
+		for(j=i;j<i+NO/2;j++)
+		{
+			for(k=0;k<NO/2;k++)
+			{
+				a[j+NO/2][k+NO/2]=a[j][k];
+			}
+		}
+		for(j=i+NO/2;j<i+NO;j++)
+		{
+			for(k=0;k<NO/2;k++)
+			{
+				a[j-NO/2][k+NO/2]=a[j][k];
+			}
+		}
+	}
+}

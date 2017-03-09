@@ -1,0 +1,43 @@
+#include<stdio.h>
+#include<conio.h>
+int binarySearch(int a[],int first,int last,int key);
+void main()
+{
+	int a[20],n,i,key;
+	clrscr();
+	printf("Enter no. of elements : ");
+	scanf("%d",&n);
+	printf("Enter elements in ascending order : ");
+	for(i=0;i<n;i++)
+	{
+		printf("Element %d : ",i+1);
+		scanf("%d",&a[i]);
+	}
+	printf("Enter element to be searched : ");
+	scanf("%d",&key);
+	i=binarySearch(a,0,n-1,key);
+	printf("Position of key : %d",i+1);
+	getch();
+}
+
+int binarySearch(int a[],int first,int last,int key)
+{
+	int mid;
+	if(first<last)
+	{
+		mid=(first+last)/2;
+		if(a[mid]<key)
+		{
+			first=mid+1;
+			return binarySearch(a,first,last,key);
+		}
+		else
+		if(a[mid]>key)
+		{
+			last=mid-1;
+			return binarySearch(a,first,last,key);
+		}
+		else
+		return mid;
+	}
+}

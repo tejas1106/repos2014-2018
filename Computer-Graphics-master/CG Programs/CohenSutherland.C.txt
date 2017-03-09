@@ -1,0 +1,117 @@
+#include<conio.h>
+#include<stdio.h>
+#include<graphics.h>
+#include<stdlib.h>
+int getcode(int x,int y,int xmin,int xmax,int ymin,int ymax);
+enum mycode{TOP=8,BOTTOM=4,RIGHT=2,LEFT=1};
+void main()
+{
+	int graphics_driver=DETECT,graphics_mode;
+	int x1,y1,x2,y2,code1,code2,processcode,xmin,xmax,ymin,ymax;
+	float x,y;
+	clrscr();
+	initgraph(&graphics_driver,&graphics_mode,"C:\\TC\\BGI");
+	printf("Enter endpoints of line : \n");
+	printf("X1,Y2 : ");
+	scanf("%d%d",&x1,&y1);
+	printf("X2,Y2 : ");
+	scanf("%d%d",&x2,&y2);
+	printf("Enter min and max co-ordinates of rectangle : \n");
+	printf("xmin,xmax,ymin,ymax : ");
+	scanf("%d%d%d%d",&xmin,&xmax,&ymin,&ymax);
+	cleardevice();
+	setcolor(11);
+	outtextxy(10,10,"BEFORE CLIPPING : ");
+	line(x1,y1,x2,y2);
+	rectangle(xmin,ymax,xmax,ymin);
+	getch();
+	cleardevice();
+	code1=getCode(x1,y1,xmin,xmax,ymin,ymax);
+	code2=getCode(x2,y2,xmin,xmax,ymin,ymax);
+	outtextxy(10,10,"AFTER CLIPPING : ");
+	rectangle(xmin,ymax,xmax,ymin);
+	if(code1==0 && code2==0)
+	{
+		line(x1,y1,x2,y2);
+		getch();
+		exit(0);
+	}
+	else
+	if((code1&code2)!=0)
+	{
+		getch();
+		exit(0);
+	}
+	else
+	{
+		while(code1!=0 || code2!=0)
+		{
+			if(code1!=0)
+			processcode=code1;
+			else
+			processcode=code2;
+			if(processcode&LEFT)
+			{
+				y=((float)y2-y1)*(xmin-x1)/(x2-x1)+y1;
+				x=xmin;
+			}
+			else
+			if(processcode&RIGHT)
+			{
+				y=((float)y2-y1)*(xmax-x1)/(x2-x1)+y1;
+				x=xmax;
+			}
+			else
+			if(processcode&BOTTOM)
+			{
+				x=((float)x2-x1)*(ymin-y1)/(y2-y1)+x1;
+				y=ymin;
+			}
+			else
+			{
+				x=((float)x2-x1)*(ymax-y1)/(y2-y1)+x1;
+				y=ymax;
+			}
+			if(processcode==code1)
+			{
+				x1=x;
+				y1=y;
+				code1=getCode(x1,y1,xmin,xmax,ymin,ymax);
+			}
+			else
+			{
+				x2=x;
+				y2=y;
+				code2=getCode(x2,y2,xmin,xmax,ymin,ymax);
+			}
+		}
+		line(x1,y1,x2,y2);
+		getch();
+		exit(0);
+	}
+	closegraph();
+}
+
+int getCode(int x,int y,int xmin,int xmax,int ymin,int ymax)
+{
+	int code=0;
+	if(x<xmin)
+	{
+		code+=LEFT;
+	}
+	else
+	if(x>xmax)
+	{
+		code+=RIGHT;
+	}
+	if(y<ymin)
+	{
+		code+=BOTTOM;
+	}
+	else
+	if(y>ymax)
+	{
+		code+=TOP;
+	}
+	return code;
+}

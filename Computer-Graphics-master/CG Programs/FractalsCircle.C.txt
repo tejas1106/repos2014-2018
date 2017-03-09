@@ -1,0 +1,32 @@
+#include<stdio.h>
+#include<conio.h>
+#include<graphics.h>
+void drawcircle(int x,int y,int r);
+void main()
+{
+int graphics_driver=DETECT,graphics_mode;
+int x,y,r;
+initgraph(&graphics_driver,&graphics_mode,"C:\\TC\\BGI");
+clrscr();
+printf("Enter center co-ordinaes : ");
+scanf("%d%d",&x,&y);
+printf("Enter radius : ");
+scanf("%d",&r);
+cleardevice();
+setcolor(11);
+drawcircle(x,y,r);
+getch();
+closegraph();
+}
+
+void drawcircle(int x,int y,int r)
+{
+if(r>2)
+{
+ellipse(x,y,0,360,r,r);
+drawcircle(x+r,y,r/2);
+drawcircle(x-r,y,r/2);
+drawcircle(x,y+r,r/2);
+drawcircle(x,y-r,r/2);
+}
+}

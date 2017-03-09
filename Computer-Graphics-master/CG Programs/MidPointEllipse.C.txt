@@ -1,0 +1,68 @@
+#include<stdio.h>
+#include<conio.h>
+#include<graphics.h>
+void drawEllipse(int x,int y,int xcenter,int ycenter);
+void main()
+{
+	int graphics_driver=DETECT,graphics_mode;
+	int xcenter,ycenter,x,y;
+	float a,b,pk;
+	clrscr();
+
+	initgraph(&graphics_driver,&graphics_mode,"C:\\TC\\BGI");
+	printf("Enter centre of ellipse : ");
+	scanf("%d%d",&xcenter,&ycenter);
+	printf("Enter semi-major and semi-minor axes : ");
+	scanf("%f%f",&a,&b);
+
+	pk=b*b+a*a/4-a*a*b;
+	x=0;
+	y=b;
+	drawEllipse(x,y,xcenter,ycenter);
+	while(b*b*x<=a*a*y)
+	{
+		if(pk<0)
+		{
+			pk=pk+b*b*(2*(x+1)+1);
+			x=x+1;
+		}
+		else
+		{
+			pk=pk+b*b*(2*(x+1)+1)-a*a*(2*(y-1));
+			x=x+1;
+			y=y-1;
+		}
+		drawEllipse(x,y,xcenter,ycenter);
+	}
+
+		pk=a*a+b*b/4-b*b*a;
+	x=a;
+	y=0;
+	drawEllipse(x,y,xcenter,ycenter);
+	while(b*b*x>a*a*y)
+	{
+		if(pk<0)
+		{
+			pk=pk+a*a*(2*(y+1)+1);
+			y=y+1;
+		}
+		else
+		{
+			pk=pk+a*a*(2*(y+1)+1)-b*b*(2*(x-1));
+			y=y+1;
+			x=x-1;
+		}
+		drawEllipse(x,y,xcenter,ycenter);
+	}
+	getch();
+	closegraph();
+
+}
+
+void drawEllipse(int x,int y,int xcenter,int ycenter)
+{
+	putpixel(xcenter+x,ycenter+y,11);
+	putpixel(xcenter+x,ycenter-y,11);
+	putpixel(xcenter-x,ycenter+y,11);
+	putpixel(xcenter-x,ycenter-y,11);
+}
