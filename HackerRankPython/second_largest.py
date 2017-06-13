@@ -1,0 +1,5 @@
+n = int(input())
+arr = map(int,input().split())
+s = list(set(arr))
+l = sorted(s)
+print(l[-2])

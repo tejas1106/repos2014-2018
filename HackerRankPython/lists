@@ -1,0 +1,10 @@
+n = int(input())
+l = []
+for i in range(n):
+    s = input().split()
+    if s[0]!="print":
+        command = s[0]
+        arguments = s[1:]
+        eval("l."+command+"("+",".join(arguments)+")")
+    else:
+        print(l)

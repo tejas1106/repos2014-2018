@@ -1,0 +1,8 @@
+n = int(input())
+m = input().split(" ")
+result = list(map(int,m))
+k = set(result)
+t = list(k)
+list.sort(t)
+list.reverse(t)
+print(t[1])

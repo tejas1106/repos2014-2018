@@ -1,0 +1,11 @@
+import math
+l=[]
+for i in range(100):
+    m = input()
+    if(m=="end"):
+        break
+    l.append(m.split())
+sum=0
+for i in l:
+    sum+=int((i[3][1:]).replace(",",""))
+print(math.ceil((sum/len(l))))
