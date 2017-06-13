@@ -1,0 +1,108 @@
+tejas1106@ubuntu:~$ cd Desktop
+tejas1106@ubuntu:~/Desktop$ cd posixmsgp
+tejas1106@ubuntu:~/Desktop/posixmsgp$ gcc -o central.central
+gcc: fatal error: no input files
+compilation terminated.
+tejas1106@ubuntu:~/Desktop/posixmsgp$ clear
+
+tejas1106@ubuntu:~/Desktop/posixmsgp$ gcc -o central central.c
+tejas1106@ubuntu:~/Desktop/posixmsgp$ gcc -o external external.c
+tejas1106@ubuntu:~/Desktop/posixmsgp$ ./external 100 1 & ./external 22 2 & ./external 50 3 & ./external 40 4 & ./central 60 &[1] 3699
+[2] 3700
+[3] 3701
+[4] 3702
+[5] 3703
+tejas1106@ubuntu:~/Desktop/posixmsgp$ 
+Starting Server...
+
+Process 1 Temp : 82
+
+Process 2 Temp : 35
+
+Process 3 Temp : 52
+
+Process 4 Temp : 46
+
+Process 1 Temp : 70
+
+Process 2 Temp : 42
+
+Process 3 Temp : 52
+
+Process 4 Temp : 49
+
+Process 1 Temp : 63
+
+Process 2 Temp : 46
+
+Process 3 Temp : 52
+
+Process 4 Temp : 50
+
+Process 1 Temp : 58
+
+Process 2 Temp : 48
+
+Process 3 Temp : 52
+
+Process 4 Temp : 50
+
+Process 1 Temp : 55
+
+Process 2 Temp : 49
+
+Process 3 Temp : 52
+
+Process 4 Temp : 50
+
+Process 1 Temp : 53
+
+Process 2 Temp : 49
+
+Process 3 Temp : 51
+
+Process 4 Temp : 50
+
+Process 1 Temp : 51
+
+Process 2 Temp : 49
+
+Process 3 Temp : 50
+
+Process 4 Temp : 50
+
+Process 1 Temp : 50
+
+Process 2 Temp : 49
+
+Process 3 Temp : 50
+
+Process 4 Temp : 50
+
+Process 1 Temp : 49
+
+Process 2 Temp : 49
+
+Process 3 Temp : 49
+
+Process 4 Temp : 49
+
+Process 1 Temp : 49
+
+Process 2 Temp : 49
+
+Process 3 Temp : 49
+
+Process 4 Temp : 49
+
+Temperature Stabilized: 49
+
+Process 1 Temp (stable) : 49
+
+Process 2 Temp (stable) : 49
+
+Process 3 Temp (stable) : 49
+
+
+Process 4 Temp (stable) : 49
+Shutting down Server...

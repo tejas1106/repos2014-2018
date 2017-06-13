@@ -1,0 +1,74 @@
+/*Tejas1106
+date : April 1,2016*/
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+int q[20],n;
+int checkHit(int temp,int total);
+void push(int temp,int pointer);
+void display(int total);
+
+void main()
+{
+int total=0,temp,k,pointer=0;
+char tempchar;
+clrscr();
+printf("Welcome to FIFO Replacement Algorithm!\n");
+printf("Enter 'n' for exit!\n");
+printf("Enter Cache Block Size : ");
+scanf("%d",&n);
+while(1)
+{
+	printf("\nEnter element : ");
+	tempchar=getche();
+	temp=tempchar-'0';
+	if(tempchar=='n')
+	{
+		exit(0);
+	}
+	k=checkHit(temp,total);
+	if(k==-1)
+	{
+		push(temp,pointer);
+		pointer=(pointer+1)%4;
+	}
+	if(k==-1)
+	{
+		total+=1;
+	}
+	if(total>=4)
+	{
+		total=4;
+	}
+	display(total);
+}
+}
+
+int checkHit(int temp,int total)
+{
+	int i;
+	for(i=0;i<total;i++)
+	{
+		if(q[i]==temp)
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+
+void push(int temp,int pointer)
+{
+	q[pointer]=temp;
+}
+
+void display(int total)
+{
+	int i;
+	printf("\n");
+	printf("Cache--->");
+	for(i=0;i<total;i++)
+	{
+		printf("%4d",q[i]);
+	}
+}

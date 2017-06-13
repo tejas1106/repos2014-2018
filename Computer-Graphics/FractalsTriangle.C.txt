@@ -1,0 +1,49 @@
+#include<stdio.h>
+#include<conio.h>
+#include<graphics.h>
+#include<math.h>
+void fractalPattern(int x1,int y1,int x2,int y2,int x3,int y3);
+
+void main()
+{
+	int graphics_driver=DETECT,graphics_mode;
+	int i,a[20][2];
+	clrscr();
+	initgraph(&graphics_driver,&graphics_mode,"C:\\TC\\BGI");
+	printf("Enter vertices of triangle : \n");
+	for(i=0;i<3;i++)
+	{
+		printf("X%d,Y%d : ",i+1,i+1);
+		scanf("%d%d",&a[i][0],&a[i][1]);
+	}
+	setcolor(11);
+	cleardevice();
+	fractalPattern(a[0][0],a[0][1],a[1][0],a[1][1],a[2][0],a[2][1]);
+	getch();
+	closegraph();
+}
+
+void fractalPattern(int x1,int y1,int x2,int y2,int x3,int y3)
+{
+	int xmid1,xmid2,xmid3,ymid1,ymid2,ymid3;
+	if(abs(x3-x1)<4)
+	{
+		return;
+	}
+	else
+	{
+		setcolor(11);
+		line(x1,y1,x2,y2);
+		line(x2,y2,x3,y3);
+		line(x3,y3,x1,y1);
+		xmid1=(x1+x2)/2;
+		xmid2=(x2+x3)/2;
+		xmid3=(x3+x1)/2;
+		ymid1=(y1+y2)/2;
+		ymid2=(y2+y3)/2;
+		ymid3=(y3+y1)/2;
+		fractalPattern(x1,y1,xmid1,ymid1,xmid3,ymid3);
+		fractalPattern(xmid1,ymid1,x2,y2,xmid2,ymid2);
+		fractalPattern(xmid3,ymid3,xmid2,ymid2,x3,y3);
+	}
+}

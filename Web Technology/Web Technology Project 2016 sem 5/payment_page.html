@@ -1,0 +1,77 @@
+<div style="margin:20px 10px 0px 20px;background-color:violet;padding:10px 10px 10px 10px;">
+	<div>
+		<button class="btn btn-primary" id="pay_by_card">Pay by Card</button>
+		<button class="btn btn-primary" id="pay_by_net">Netbanking</button>
+	</div>
+	<div id="payment_body">
+		<div>
+			<br>
+			Choose your bank : 
+			<select name="banks">
+			  <option value="SBI">State Bank of India</option>
+			  <option value="HDFC">HDFC</option>
+			  <option value="ICICI">ICICI</option>
+			  <option value="AXIS">AXIS</option>
+			</select>
+			<br>
+			<br>
+			Enter your card Number : <input type="text" maxlength="20" id="card_no"><br><br>
+			Enter CVV : <input type="text" maxlength="3" id="cvv"> <br><br>
+			Enter pin : <input type="text" maxlength="4" id="pin"><br><br>
+		</div>
+	</div>
+	<p id="status" style="color:red;"></p>
+	<button class="btn btn-success" id="make_payment">Make Payment</button>
+</div>
+	<script>
+		$(document).ready(function()
+		{
+			$("#pay_by_card").click(function()
+			{
+				$("#payment_body").load("pay_by_card.html");
+			});
+		});
+		
+		$(document).ready(function()
+		{
+			$("#pay_by_net").click(function()
+			{
+				$("#payment_body").load("pay_by_net.html");
+			});
+		});
+		
+		$(document).ready(function()
+		{
+			$("#make_payment").click(function()
+			{
+			var card_no=$("#card_no").val();
+			var cvv=$("#cvv").val();
+			var pin=$("#pin").val();
+			var username=$("#username").val();
+			var password=$("#password").val();
+			if((card_no=="" && cvv=="" && pin=="" )||(username=="" && password==""))
+			{
+				$("#status").html("*Please fill all details.");
+			}
+			else
+			{
+				var dataString = "value="+y+"&type=book_room";
+				$.ajax({
+						type:"POST",
+						url:"book_room.php",
+						data:dataString,
+						cache:false,
+						beforeSend:function()
+						{
+						},
+						success:function(response)
+						{
+							alert("Payment Done!");
+							location.reload();
+						}
+					});
+			}
+			});
+		});
+	</script>
+</div>

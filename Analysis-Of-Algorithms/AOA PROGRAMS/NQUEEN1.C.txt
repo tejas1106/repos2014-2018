@@ -1,0 +1,89 @@
+#include<stdio.h>
+#include<conio.h>
+#include<math.h>
+void nqueen(int row);
+void printMatrix();
+int feasible(int row,int col);
+int getMarkedCol(int row);
+char c[20][20];
+int n;
+void main()
+{
+	int i,j;
+	clrscr();
+	printf("Enter no. of queens : ");
+	scanf("%d",&n);
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<n;j++)
+		{
+			c[i][j]='.';
+		}
+	}
+	printMatrix();
+	nqueen(0);
+	getch();
+}
+
+void nqueen(int row)
+{
+	int i;
+	if(row<n)
+	{
+		for(i=0;i<n;i++)
+		{
+			if(feasible(row,i))
+			{
+				c[row][i]='Q';
+				nqueen(row+1);
+				c[row][i]='.';
+			}
+		}
+	}
+	else
+	{
+		printf("\nThe solution is : \n");
+		printMatrix();
+		getch();
+	}
+}
+
+int feasible(int row,int col)
+{
+	int i,tcol;
+	for(i=0;i<n;i++)
+	{
+		tcol=getMarkedCol(i);
+		if((col==tcol) || abs(row-i)==abs(col-tcol))
+		{
+			return 0;
+		}
+	}
+	return 1;
+}
+
+int getMarkedCol(int row)
+{
+	int i;
+	for(i=0;i<n;i++)
+	{
+		if(c[row][i]=='Q')
+		{
+			return i;
+		}
+	}
+}
+
+void printMatrix()
+{
+	int i,j;
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<n;j++)
+		{
+			printf("%c\t",c[i][j]);
+		}
+		printf("\n");
+	}
+	getch();
+}
