@@ -1,16 +1,17 @@
 #include<iostream>
 #include<cmath>
+#include<cstdio>
 using namespace std;
 int main()
 {
-    float l,s1,s2,m,ans;
+    double l,s1,s2,m,ans;
     int q;
     cin>>l>>s1>>s2;
     cin>>q;
     while(q--)
     {
         cin>>m;
-        ans=(l-sqrt(m))*sqrt(2)/abs(s1-s2);
-        cout<<ans<<endl;
+        ans=(double)((l-sqrt(m))/abs(s1-s2))*sqrt(2);
+        printf("%.7f\n",ans);
     }
 }
